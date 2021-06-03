@@ -1,5 +1,7 @@
-temp_hum = [[2,6],[4,9],[12,32]]
-prec_cm = [25,32,50]
+import numpy as np
+
+temp_hum = np.array([[2.0,6.0],[4.4,9.7],[12.6,32.5]])
+prec_cm = np.array([25.5,32.2,50.2])
 
 def normTempHum(tempHum):
 	normVal = []
@@ -11,9 +13,10 @@ def normTempHum(tempHum):
 			maxTemp = i[0]
 		if i[1] > maxHum:
 			maxHum = i[1]
+	normalizer = np.array([maxTemp,maxHum])
 	for i in range(len(tempHum)):
-		tempHum[i][0]= tempHum[i][0]/maxTemp 
-		tempHum[i][1]= tempHum[i][1]/maxHum
+		tempHum[i][0] = tempHum[i][0]/normalizer[0]
+		tempHum[i][1] = tempHum[i][1]/normalizer[1]
 	return tempHum
 
 def normPrec(prec):
@@ -29,4 +32,6 @@ def normPrec(prec):
 normIn = normTempHum(temp_hum)
 print(normIn)
 normOut = normPrec(prec_cm)
-print(normOut)
+#print(normOut)
+
+
