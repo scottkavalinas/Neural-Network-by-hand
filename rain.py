@@ -29,9 +29,44 @@ def normPrec(prec):
 		prec[i] = prec[i]/maxPrec
 	return prec
 
+weight_input = np.array([[0.16,0.16,0.16],[0.16,0.16,0.16]])
 normIn = normTempHum(temp_hum)
-print(normIn)
+#print(weight_input)
+#print(normIn)
 normOut = normPrec(prec_cm)
-#print(normOut)
+print(normOut)
+hidden_layer = np.matmul(normIn,weight_input)
+#print(hidden_layer)
+
+
+def sigmoid(layer):
+	return (1/(1+np.exp(-layer)))
+
+act = sigmoid(hidden_layer)
+#print(act)
+
+weight_layer_2 = np.array([.1,.1,.1])
+
+estimate = np.matmul(act,weight_layer_2)
+
+print(estimate)
+
+def cost(obs,est):
+	error = obs - est
+	sq_error = error**2
+	return np.sum(sq_error) *0.5
+
+e = cost(normOut,estimate)
+print(e)
+
+#independently compute the partials of weights 1 and 2 vs the cost (e)
+ #partial of error vs weight 2
+def sigPrime(mat):
+	return np.exp(-mat)/((1+np.exp(-mat))**2)
+
+
+
+
+
 
 
